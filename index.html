@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Bingo</title>
+</head>
+<body>
+    
+    <div class="head"></div>
+
+    <div class="card">
+        <div class="top"><div>B</div><div>I</div><div>N</div><div>G</div><div>O</div></div>
+        <div class="numbers"></div>
+    </div>
+
+</body>
+<script>
+
+    for(let x=0; x<5; x++){
+        const line = document.createElement('div')
+        line.className = (x==0 ? '' : 'lin ') + 'line'
+        for(let y=0; y<5; y++){
+            const cell = document.createElement('div')
+            cell.className = (y==0 ? '' : 'col ') + 'cell cell'+x+'-'+y
+            line.appendChild(cell)
+        }
+        document.querySelector('.numbers').appendChild(line)
+    }
+
+
+    class Cartela{
+        constructor(){
+            function create(S){
+            const col = []
+            while(col.length<5){
+                const x = Math.floor(Math.random()*15) +S
+                if(!col.includes(x)){
+                col.push(x)        
+                }
+            }
+            return col
+            }
+            
+            this.B = create(1)
+            this.I = create(16)
+            this.N = create(31)
+            this.G = create(46)
+            this.O = create(61)
+            this.N[2] = 0
+        }
+    
+    }
+
+    const cartela = new Cartela
+
+    function showCartela(C){        
+        for(let x=0; x<5; x++){
+            for(let y=0; y<5; y++){
+                const cell = document.querySelector('.cell'+x+'-'+y)
+                cell.innerHTML = C['BINGO'[y]][x] == 0 ? 'FREE' : C['BINGO'[y]][x]
+                C['BINGO'[y]][x] == 0 ? cell.className += ' center' :  ''
+            }
+        } 
+    }
+
+    showCartela(cartela)
+
+
+
+</script>
+</html>
