@@ -8,66 +8,32 @@
 </head>
 <body>
     
-    <div class="head"></div>
+    <div class="sorteio"></div>
 
+    <div class="head"></div>
     <div class="card">
         <div class="top"><div>B</div><div>I</div><div>N</div><div>G</div><div>O</div></div>
         <div class="numbers"></div>
     </div>
 
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="md-header"></h2>
+                <span class="close">&times;</span> 
+            </div>
+            <div id="md-body"></div>
+        </div>
+
+    </div>  
+
+
 </body>
+<script src="script.js"></script>
 <script>
-
-    for(let x=0; x<5; x++){
-        const line = document.createElement('div')
-        line.className = (x==0 ? '' : 'lin ') + 'line'
-        for(let y=0; y<5; y++){
-            const cell = document.createElement('div')
-            cell.className = (y==0 ? '' : 'col ') + 'cell cell'+x+'-'+y
-            line.appendChild(cell)
-        }
-        document.querySelector('.numbers').appendChild(line)
-    }
-
-
-    class Cartela{
-        constructor(){
-            function create(S){
-            const col = []
-            while(col.length<5){
-                const x = Math.floor(Math.random()*15) +S
-                if(!col.includes(x)){
-                col.push(x)        
-                }
-            }
-            return col
-            }
-            
-            this.B = create(1)
-            this.I = create(16)
-            this.N = create(31)
-            this.G = create(46)
-            this.O = create(61)
-            this.N[2] = 0
-        }
-    
-    }
-
-    const cartela = new Cartela
-
-    function showCartela(C){        
-        for(let x=0; x<5; x++){
-            for(let y=0; y<5; y++){
-                const cell = document.querySelector('.cell'+x+'-'+y)
-                cell.innerHTML = C['BINGO'[y]][x] == 0 ? 'FREE' : C['BINGO'[y]][x]
-                C['BINGO'[y]][x] == 0 ? cell.className += ' center' :  ''
-            }
-        } 
-    }
-
-    showCartela(cartela)
-
-
-
+    openHTML('begin.html')
 </script>
 </html>
