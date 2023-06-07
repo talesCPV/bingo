@@ -10,6 +10,18 @@ body{
     align-items: center;    
 }
 
+input[type=range]::-moz-range-track{
+    box-shadow: 3px 3px 3px #00AA00;
+    border: 2px solid #83E584;
+    height: 23px;           
+    border-radius: 23px;
+    background: #439643;
+    cursor: pointer;
+}
+
+button:hover{
+    cursor: pointer;
+}
 
 .sorteio{
     width: 100vw;
@@ -17,7 +29,9 @@ body{
     border-radius: 20px;
     border: solid 2px black;
     margin: 20px;
-
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
 
 }
 
@@ -131,10 +145,15 @@ font-size: 1.5em !important;
   }
 
   .modal-header {
-    padding: 8px 16px;
-    border-bottom: solid 1px rgb(58, 165, 58);
-    text-align: center;
-    color: #16a083;
+      display: flex;
+      padding: 8px 16px;
+      border-bottom: solid 1px rgb(58, 165, 58);
+      text-align: center;
+      color: #16a083;
+  }
+
+  .modal-header h2{
+      width: 100%;
   }
 
   .center-btn{
@@ -149,17 +168,17 @@ font-size: 1.5em !important;
       position: relative;
       top: 0px;
       right: 20px;
-      border: 0;
       font-size: 1.2rem;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-top: 15px;  
+
   }
 
   .close:hover{
       cursor: pointer;
-      width: 20px;
-      height: 20px;
       border: solid 2px;
-      border-radius: 50%;
-      padding: 5px;
   }
 
   #md-body{

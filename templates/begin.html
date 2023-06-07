@@ -9,7 +9,7 @@
             flex-direction: column;
             align-items: center;
             gap: 10px;
-            padding-top: 50px;
+            padding: 30px;
         }
 
         #btnLogin, input[type="text"], input[type="password"]{
@@ -23,45 +23,28 @@
 
 
         <label for="edtNumCartela">Num Cartelas Totais</label>
-        <input type="text" id="edtNumCartela">
+        <input type="text" id="edtNumCartela" onkeyup="valInt(this)" value="10">
         <label for="edtNumMinhaCart">Qtd Minhas Cartelas</label>
-        <input type="text" id="edtNumMinhaCart">
+        <input type="text" id="edtNumMinhaCart" onkeyup="valInt(this)" value="1">
 
-        <button id="btnLogin" class="btn btn-primary">Jogar</button>
+        <button id="btnJogar">Jogar</button>
 
     </div>
 
 </template>
 <script>
 
-    function novoUsuario(){        
-        openHTML('novoUser.html')
-    }
-
-    document.querySelector('#btnLogin').addEventListener('click',()=>{
-
-        const params = new Object;
-            params.email =  document.querySelector('#edtUser').value.trim()
-            params.hash = document.querySelector('#edtSenha').value.trim().getHash(30)
-
-        const myPromisse = queryDB(params,16)
-
-        myPromisse.then((resolve)=>{
-            const json = JSON.parse(resolve)
-            if(json.length > 0){
-                localStorage.setItem('idUser',json[0].id)
-                localStorage.setItem('idAtleta',json[0].id_atleta)
-                localStorage.setItem('atleta',json[0].atleta)
-                checkLogin()
-                document.getElementById("myModal").style.display = "none";
-            }else{
-                alert('Usuário ou senha inválido!')
-                localStorage.clear();
-                checkLogin()
-            }
-        })
+    document.querySelector('#btnJogar').addEventListener('click',()=>{
+        const tot = parseInt(document.querySelector('#edtNumCartela').value)
+        const min = parseInt(document.querySelector('#edtNumMinhaCart').value)
+        data.cartelas = []
+        for(let i=0; i<tot ; i++){
+            data.cartelas.push(new Cartela)
+        }
+        showCartela(data.cartelas[0])
+        close()
+        start()
 
     })
-
 
 </script>
