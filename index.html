@@ -20,6 +20,11 @@
         <div>
             <label for="edtSpeed">Velocidade:</label>
             <input id="edtSpeed" type="range" min="0" max="5" value="3">
+        </div>
+        <div>
+            <h1 id="edtSorteio"></h1>
+        </div>
+        <div class="line-center">
             <button id="btnPlay">PLAY</button>
         </div>
 
@@ -53,9 +58,16 @@
 <script>
     openHTML('begin.html')
 
-    document.querySelector('#btnPlay').addEventListener('click',()=>{
 
-        sorteio()
+    document.querySelector('#edtSpeed').addEventListener('change',()=>{
+        data.clock.speed = (parseInt(document.querySelector('#edtSpeed').value)+1)
+    })
+
+    document.querySelector('#btnPlay').addEventListener('click',()=>{
+        data.run = !data.run
+        document.querySelector('#btnPlay').innerHTML = data.run ? 'PAUSE' : 'PLAY'
+
+
     })
 
 </script>

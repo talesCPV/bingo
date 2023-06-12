@@ -25,7 +25,7 @@ button:hover{
 
 .sorteio{
     width: 100vw;
-    height: 100px;
+    height: auto;
     border-radius: 20px;
     border: solid 2px black;
     margin: 20px;
@@ -33,6 +33,16 @@ button:hover{
     display: flex;
     flex-direction: column;
 
+}
+
+#edtSorteio{
+    width: 100%;
+    text-align: center;
+}
+
+.line-center{
+    display: flex;
+    justify-content: center;
 }
 
 .card{
@@ -94,6 +104,11 @@ font-size: 1.5em !important;
 .cell:hover{
     cursor: pointer;
     color: blanchedalmond;
+}
+
+.mark{
+    background-color: darkblue;
+    color: darkgrey;
 }
 
 /* MODAL  */

@@ -1,7 +1,9 @@
 
 const data = new Object
-    data.run = false
-    data.speed = 1000
+    data.clock = new Object
+    data.clock.run = false
+    data.clock.speed = 5
+    data.clock.count = 0
     data.cartelas = []
     data.minhas = []
     data.saiu = []
@@ -85,35 +87,108 @@ async function openHTML(template=""){
 
 
     function start(){
+        data.saiu = []
         data.naosaiu = []
         for(let i=1; i<=75; i++){
             data.naosaiu.push(i)
         }
-        data.run = true
-        data.speed = (parseInt(document.querySelector('#edtSpeed').value)+1) * 1000
     }
 
 
     function sorteio(){
         const index = Math.floor(Math.random()*data.naosaiu.length)
         data.saiu.push(data.naosaiu[index])
+        const col = 'BINGO'[Math.floor((parseInt(data.naosaiu[index])-1)/15)]
+        document.querySelector('#edtSorteio').innerHTML = col+'-'+data.naosaiu[index]
         data.naosaiu.splice(index,1)
         document.querySelector('#edtNumSorteado').innerHTML = ''
         for(let i=0; i<data.saiu.length; i++){
             document.querySelector('#edtNumSorteado').innerHTML += data.saiu[i]+', ' 
         }
-
+        for(let i=0; i<data.cartelas.length; i++){
+            if(checaCartela(data.cartelas[i])){
+                alert(`BINGO!!!\r\nCartela num.${i}`)
+                start()
+                data.run = false
+                document.querySelector('#btnPlay').innerHTML = 'PLAY'
+                document.querySelector('#edtSorteio').innerHTML = ''
+        
+            }
+        }
 
     }
+
+    function checaCartela(C,full=false){  
+        let out = false      
+        const marca = new Object
+            marca.l1 = 0
+            marca.l2 = 0
+            marca.l3 = 0
+            marca.l4 = 0
+            marca.l5 = 0
+            marca.c1 = 0
+            marca.c2 = 0
+            marca.c3 = 0
+            marca.c4 = 0
+            marca.c5 = 0
+            marca.d1 = 0
+            marca.d2 = 0
+            marca.cheia = 0
+
+        for(let y=0; y<5; y++){
+            for(let x=0; x<5; x++){
+                const n = C['BINGO'[y]][x] 
+                if(data.saiu.includes(n) || n==0){
+                    marca.l1 += x==0 ? 1 : 0
+                    marca.l2 += x==1 ? 1 : 0
+                    marca.l3 += x==2 ? 1 : 0
+                    marca.l4 += x==3 ? 1 : 0
+                    marca.l5 += x==4 ? 1 : 0
+                    marca.c1 += y==0 ? 1 : 0
+                    marca.c2 += y==1 ? 1 : 0
+                    marca.c3 += y==2 ? 1 : 0
+                    marca.c4 += y==3 ? 1 : 0
+                    marca.c5 += y==4 ? 1 : 0
+                    marca.d1 += x==y ? 1 : 0
+                    marca.d2 += x==4-y ? 1 : 0
+                    marca.cheia++
+//                    console.log([n,x,y])
+                }
+            }
+        }
+
+        if(full){
+            out = marca.cheia == 25 ? true : false
+        }else{
+            out = marca.l1 == 5 ? true : out
+            out = marca.l2 == 5 ? true : out
+            out = marca.l3 == 5 ? true : out
+            out = marca.l4 == 5 ? true : out
+            out = marca.l4 == 5 ? true : out
+            out = marca.c1 == 5 ? true : out
+            out = marca.c2 == 5 ? true : out
+            out = marca.c3 == 5 ? true : out
+            out = marca.c4 == 5 ? true : out
+            out = marca.c5 == 5 ? true : out
+            out = marca.d1 == 5 ? true : out
+            out = marca.d2 == 5 ? true : out
+        }        
+        return out
+    }
+
 
 
 /* RUN */
 
 setInterval(()=>{
     if(data.run){
-        sorteio()
+        data.clock.count ++
+        if(data.clock.count >= data.clock.speed){
+            sorteio()
+            data.clock.count = 0
+        }
     }
-}, data.speed);
+}, 1000);
 
 for(let x=0; x<5; x++){
     const line = document.createElement('div')
@@ -122,6 +197,14 @@ for(let x=0; x<5; x++){
         const cell = document.createElement('div')
         cell.className = (y==0 ? '' : 'col ') + 'cell cell'+x+'-'+y
         line.appendChild(cell)
+        cell.addEventListener('click',()=>{
+            if(cell.classList.contains('mark')){
+                cell.classList.remove('mark')
+            }else{
+                cell.classList.add('mark')            
+            }                
+        })
+    
     }
     document.querySelector('.numbers').appendChild(line)
 }
