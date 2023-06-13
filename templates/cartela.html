@@ -3,6 +3,28 @@
 </title>
 <template>
     <style>
+
+        #divSpeed, #divAuto{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #divTop{
+            display: flex;
+            flex-direction: column;
+        }
+
+        #divAuto{
+            margin-bottom: 10px;
+        }
+
+        label:hover{
+            cursor: pointer;
+        }
+
         @media (max-width: 680px) {
 
             .modal{
@@ -14,18 +36,25 @@
             }
             
             .card{
-                width: auto;
+               
                 height: 450px;
             }
 
+
+
         }
     </style>
-    <div>
-        <div>
-            <label for="edtSpeed">Velocidade:</label>
-            <input id="edtSpeed" type="range" min="0" max="10" value="5">
-            <button id="btnPlay">PLAY</button>
+    <div id="divTop">
+        <div id="divSpeed">
+            <label for="edtSpeed">Vel.:</label>
+            <input id="edtSpeed" type="range" min="0" max="9" value="5">
+            <h2 id="viewSpeed"></h2>
         </div>
+        <div id="divAuto">
+            <label for="ckbAuto">Auto Mark</label>
+            <input type="checkbox" id="ckbAuto">
+        </div>
+        <button id="btnPlay">PLAY</button>
         <h1 id="edtSorteio">0</h1>
     </div>
     <div class="card">
@@ -36,6 +65,10 @@
 
 </template>
 <script>
+
+document.querySelector('#viewSpeed').innerHTML =  (data.clock.speed/2).toString().padEnd(3,'.0') +'seg'
+    document.querySelector('#edtSpeed').value = data.clock.speed
+    document.querySelector('#ckbAuto').checked = data.mark
 
     for(let x=0; x<5; x++){
         const line = document.createElement('div')
@@ -65,6 +98,11 @@
 
     document.querySelector('#edtSpeed').addEventListener('input',()=>{
         data.clock.speed = (parseInt(document.querySelector('#edtSpeed').value)+1)
+        document.querySelector('#viewSpeed').innerHTML =  (data.clock.speed/2).toString().padEnd(3,'.0') +'seg'
+    })
+
+    document.querySelector('#ckbAuto').addEventListener('change',()=>{
+        data.mark = !data.mark
     })
 
 </script>    

@@ -198,4 +198,7 @@ font-size: 1.5em !important;
 
   #md-body{
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }

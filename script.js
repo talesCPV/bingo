@@ -5,9 +5,10 @@ const data = new Object
     data.clock.speed = 5
     data.clock.count = 0
     data.cartelas = []
-    data.minhas = []
     data.saiu = []
     data.naosaiu = []
+    data.rodada = 0
+    data.mark = false
 
 class Cartela{
     constructor(){
@@ -67,6 +68,7 @@ async function openHTML(template=""){
 
   function close(){
     document.getElementById("myModal").style.display = "none";
+    data.mark = false
   }
 
     function valInt(edt){
@@ -87,13 +89,16 @@ async function openHTML(template=""){
 
 
     function start(){
+        data.rodada++
+        document.querySelector('#edtSortNum').innerHTML = data.rodada.toString().padStart(2,'0')
+        document.querySelector('#edtNumSorteado').innerHTML = ''
         data.saiu = []
         data.naosaiu = []
         for(let i=1; i<=75; i++){
             data.naosaiu.push(i)
         }
+        openHTML('cartela.html')
     }
-
 
     function sorteio(){
         const index = Math.floor(Math.random()*data.naosaiu.length)
@@ -106,7 +111,7 @@ async function openHTML(template=""){
             document.querySelector('#edtNumSorteado').innerHTML += data.saiu[i]+', ' 
         }
         for(let i=0; i<data.cartelas.length; i++){
-            if(checaCartela(data.cartelas[i])){
+            if(checaCartela(i)){
                 if(i==0){
                     alert('BIIIINNNGOOOOOO!!!!\r\nUHUULLLL PARABÉNS, VOCÊ VENCEU!!!!')
                 }else{
@@ -116,13 +121,14 @@ async function openHTML(template=""){
                 data.clock.run = false
                 document.querySelector('#btnPlay').innerHTML = 'PLAY'
                 document.querySelector('#edtSorteio').innerHTML = ''
-        
+                openHTML('begin.html')
             }
         }
 
     }
 
-    function checaCartela(C,full=false){  
+    function checaCartela(cardNum,full=false){  
+        C = data.cartelas[cardNum]
         let out = false      
         const marca = new Object
             marca.l1 = 0
@@ -156,7 +162,12 @@ async function openHTML(template=""){
                     marca.d1 += x==y ? 1 : 0
                     marca.d2 += x==4-y ? 1 : 0
                     marca.cheia++
-//                    console.log([n,x,y])
+
+                    if(cardNum == 0 && data.mark){
+                        const cell = document.querySelector('.cell'+x+'-'+y)
+                        cell.classList.add('mark')                           
+                    }
+                                        
                 }
             }
         }
@@ -191,5 +202,5 @@ async function openHTML(template=""){
                 data.clock.count = 0
             }
         }
-    }, 1000);
+    }, 500);
 
