@@ -17,15 +17,10 @@
             <label for="edtNumSorteado">Numeros Sorteados:</label>
             <label id="edtNumSorteado"></label>
         </div>
-        <div>
-            <label for="edtSpeed">Velocidade:</label>
-            <input id="edtSpeed" type="range" min="0" max="5" value="3">
-        </div>
-        <div>
-            <h1 id="edtSorteio"></h1>
-        </div>
+
+
         <div class="line-center">
-            <button id="btnPlay">PLAY</button>
+            <button id="btncard">Start</button>
         </div>
 
 
@@ -33,11 +28,12 @@
     </div>
 
     <div class="head"></div>
+    <!--
     <div class="card">
         <div class="top"><div>B</div><div>I</div><div>N</div><div>G</div><div>O</div></div>
         <div class="numbers"></div>
     </div>
-
+-->
     <!-- The Modal -->
     <div id="myModal" class="modal">
 
@@ -56,18 +52,11 @@
 </body>
 <script src="script.js"></script>
 <script>
+
     openHTML('begin.html')
 
-
-    document.querySelector('#edtSpeed').addEventListener('change',()=>{
-        data.clock.speed = (parseInt(document.querySelector('#edtSpeed').value)+1)
-    })
-
-    document.querySelector('#btnPlay').addEventListener('click',()=>{
-        data.run = !data.run
-        document.querySelector('#btnPlay').innerHTML = data.run ? 'PAUSE' : 'PLAY'
-
-
+    document.querySelector('#btncard').addEventListener('click',()=>{
+        openHTML('cartela.html')
     })
 
 </script>

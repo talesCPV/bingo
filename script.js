@@ -107,9 +107,13 @@ async function openHTML(template=""){
         }
         for(let i=0; i<data.cartelas.length; i++){
             if(checaCartela(data.cartelas[i])){
-                alert(`BINGO!!!\r\nCartela num.${i}`)
+                if(i==0){
+                    alert('BIIIINNNGOOOOOO!!!!\r\nUHUULLLL PARABÉNS, VOCÊ VENCEU!!!!')
+                }else{
+                    alert(`BINGO!!!\r\nCartela num.${i} venceu`)
+                }
                 start()
-                data.run = false
+                data.clock.run = false
                 document.querySelector('#btnPlay').innerHTML = 'PLAY'
                 document.querySelector('#edtSorteio').innerHTML = ''
         
@@ -177,34 +181,15 @@ async function openHTML(template=""){
     }
 
 
-
 /* RUN */
-
-setInterval(()=>{
-    if(data.run){
-        data.clock.count ++
-        if(data.clock.count >= data.clock.speed){
-            sorteio()
-            data.clock.count = 0
+    setInterval(()=>{
+        if(data.clock.run){
+            data.clock.count ++
+            console.log(1)
+            if(data.clock.count >= data.clock.speed){
+                sorteio()
+                data.clock.count = 0
+            }
         }
-    }
-}, 1000);
+    }, 1000);
 
-for(let x=0; x<5; x++){
-    const line = document.createElement('div')
-    line.className = (x==0 ? '' : 'lin ') + 'line'
-    for(let y=0; y<5; y++){
-        const cell = document.createElement('div')
-        cell.className = (y==0 ? '' : 'col ') + 'cell cell'+x+'-'+y
-        line.appendChild(cell)
-        cell.addEventListener('click',()=>{
-            if(cell.classList.contains('mark')){
-                cell.classList.remove('mark')
-            }else{
-                cell.classList.add('mark')            
-            }                
-        })
-    
-    }
-    document.querySelector('.numbers').appendChild(line)
-}

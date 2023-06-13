@@ -23,10 +23,8 @@
 
 
         <label for="edtNumCartela">Num Cartelas Totais</label>
-        <input type="text" id="edtNumCartela" onkeyup="valInt(this)" value="10">
-        <label for="edtNumMinhaCart">Qtd Minhas Cartelas</label>
-        <input type="text" id="edtNumMinhaCart" onkeyup="valInt(this)" value="1">
-
+        <input id="edtNumCartela" type="range" min="1" max="100" value="10">
+        <h1 id="edtNum">10</h1>
         <button id="btnJogar">Jogar</button>
 
     </div>
@@ -34,14 +32,16 @@
 </template>
 <script>
 
+    document.querySelector('#edtNumCartela').addEventListener('input',()=>{
+        document.querySelector('#edtNum').innerHTML = document.querySelector('#edtNumCartela').value
+    })
+
     document.querySelector('#btnJogar').addEventListener('click',()=>{
         const tot = parseInt(document.querySelector('#edtNumCartela').value)
-        const min = parseInt(document.querySelector('#edtNumMinhaCart').value)
         data.cartelas = []
         for(let i=0; i<tot ; i++){
             data.cartelas.push(new Cartela)
         }
-        showCartela(data.cartelas[0])
         close()
         start()
 

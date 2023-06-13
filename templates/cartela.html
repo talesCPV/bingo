@@ -1,0 +1,70 @@
+<title>
+    Boa Sorte
+</title>
+<template>
+    <style>
+        @media (max-width: 680px) {
+
+            .modal{
+                padding-top: 0;
+            }
+
+            .modal-content{
+                width: auto;
+            }
+            
+            .card{
+                width: auto;
+                height: 450px;
+            }
+
+        }
+    </style>
+    <div>
+        <div>
+            <label for="edtSpeed">Velocidade:</label>
+            <input id="edtSpeed" type="range" min="0" max="10" value="5">
+            <button id="btnPlay">PLAY</button>
+        </div>
+        <h1 id="edtSorteio">0</h1>
+    </div>
+    <div class="card">
+        <div class="top"><div>B</div><div>I</div><div>N</div><div>G</div><div>O</div></div>
+        <div class="numbers"></div>
+    </div>
+
+
+</template>
+<script>
+
+    for(let x=0; x<5; x++){
+        const line = document.createElement('div')
+        line.className = (x==0 ? '' : 'lin ') + 'line'
+        for(let y=0; y<5; y++){
+            const cell = document.createElement('div')
+            cell.className = (y==0 ? '' : 'col ') + 'cell cell'+x+'-'+y
+            line.appendChild(cell)
+            cell.addEventListener('click',()=>{
+                if(cell.classList.contains('mark')){
+                    cell.classList.remove('mark')
+                }else{
+                    cell.classList.add('mark')            
+                }                
+            })
+        
+        }
+        document.querySelector('.numbers').appendChild(line)
+    }
+
+    showCartela(data.cartelas[0])
+
+    document.querySelector('#btnPlay').addEventListener('click',()=>{
+        data.clock.run = !data.clock.run
+        document.querySelector('#btnPlay').innerHTML = data.clock.run ? 'PAUSE' : 'PLAY'
+    })
+
+    document.querySelector('#edtSpeed').addEventListener('input',()=>{
+        data.clock.speed = (parseInt(document.querySelector('#edtSpeed').value)+1)
+    })
+
+</script>    
