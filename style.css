@@ -19,8 +19,18 @@ input[type=range]::-moz-range-track{
     cursor: pointer;
 }
 
+button{
+    font-size: 1.5em;
+    padding: 5px;
+    background-color: #C9ECC9;
+    width: 150px;
+    border-radius: 20px;    
+}
+
 button:hover{
     cursor: pointer;
+    background-color: #439643;
+    color: cornsilk;
 }
 
 .sorteio{
@@ -201,4 +211,8 @@ font-size: 1.5em !important;
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  #cmbVencedores{
+      width: 100%;
   }

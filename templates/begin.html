@@ -32,8 +32,12 @@
 </template>
 <script>
 
+    document.querySelector('#edtNumCartela').value = data.numCard
+    document.querySelector('#edtNum').innerHTML = document.querySelector('#edtNumCartela').value
+    
     document.querySelector('#edtNumCartela').addEventListener('input',()=>{
         document.querySelector('#edtNum').innerHTML = document.querySelector('#edtNumCartela').value
+        data.numCard = parseInt(document.querySelector('#edtNumCartela').value)
     })
 
     document.querySelector('#btnJogar').addEventListener('click',()=>{

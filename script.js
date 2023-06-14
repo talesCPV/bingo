@@ -4,10 +4,12 @@ const data = new Object
     data.clock.run = false
     data.clock.speed = 5
     data.clock.count = 0
+    data.numCard = 10
     data.cartelas = []
     data.saiu = []
     data.naosaiu = []
     data.rodada = 0
+    data.vencedores = []
     data.mark = false
 
 class Cartela{
@@ -91,7 +93,6 @@ async function openHTML(template=""){
     function start(){
         data.rodada++
         document.querySelector('#edtSortNum').innerHTML = data.rodada.toString().padStart(2,'0')
-        document.querySelector('#edtNumSorteado').innerHTML = ''
         data.saiu = []
         data.naosaiu = []
         for(let i=1; i<=75; i++){
@@ -101,6 +102,7 @@ async function openHTML(template=""){
     }
 
     function sorteio(){
+        let bingo = false
         const index = Math.floor(Math.random()*data.naosaiu.length)
         data.saiu.push(data.naosaiu[index])
         const col = 'BINGO'[Math.floor((parseInt(data.naosaiu[index])-1)/15)]
@@ -112,16 +114,24 @@ async function openHTML(template=""){
         }
         for(let i=0; i<data.cartelas.length; i++){
             if(checaCartela(i)){
+                bingo = true
+                const opt = document.createElement('option') 
                 if(i==0){
                     alert('BIIIINNNGOOOOOO!!!!\r\nUHUULLLL PARABÉNS, VOCÊ VENCEU!!!!')
+                    opt.innerHTML = `rodada:${data.rodada.toString().padStart(2,'0')} - Uhuuulll, Vitória sua!!!!`
                 }else{
                     alert(`BINGO!!!\r\nCartela num.${i} venceu`)
+                    opt.innerHTML = `rodada:${data.rodada.toString().padStart(2,'0')} - Vencedor cartela ${i.toString().padStart(2,'0')}`
                 }
-                start()
                 data.clock.run = false
                 document.querySelector('#btnPlay').innerHTML = 'PLAY'
                 document.querySelector('#edtSorteio').innerHTML = ''
+                document.querySelector('#cmbVencedores').appendChild(opt)
                 openHTML('begin.html')
+                break
+            }
+            if(data.cartelas.length == i+1 && bingo){
+                start()
             }
         }
 
@@ -196,7 +206,6 @@ async function openHTML(template=""){
     setInterval(()=>{
         if(data.clock.run){
             data.clock.count ++
-            console.log(1)
             if(data.clock.count >= data.clock.speed){
                 sorteio()
                 data.clock.count = 0
