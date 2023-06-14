@@ -1,9 +1,10 @@
 
 const data = new Object
     data.clock = new Object
-    data.clock.run = false
+    data.clock.pause = true
     data.clock.speed = 5
     data.clock.count = 0
+    data.run = false
     data.numCard = 10
     data.cartelas = []
     data.saiu = []
@@ -11,6 +12,7 @@ const data = new Object
     data.rodada = 0
     data.vencedores = []
     data.mark = false
+    data.eu = 0
 
 class Cartela{
     constructor(){
@@ -70,7 +72,6 @@ async function openHTML(template=""){
 
   function close(){
     document.getElementById("myModal").style.display = "none";
-    data.mark = false
   }
 
     function valInt(edt){
@@ -92,6 +93,7 @@ async function openHTML(template=""){
 
     function start(){
         data.rodada++
+        data.run = true
         document.querySelector('#edtSortNum').innerHTML = data.rodada.toString().padStart(2,'0')
         data.saiu = []
         data.naosaiu = []
@@ -115,15 +117,17 @@ async function openHTML(template=""){
         for(let i=0; i<data.cartelas.length; i++){
             if(checaCartela(i)){
                 bingo = true
+                data.run = false
+                data.clock.pause = true
                 const opt = document.createElement('option') 
-                if(i==0){
+                if(i==data.eu){
                     alert('BIIIINNNGOOOOOO!!!!\r\nUHUULLLL PARABÉNS, VOCÊ VENCEU!!!!')
                     opt.innerHTML = `rodada:${data.rodada.toString().padStart(2,'0')} - Uhuuulll, Vitória sua!!!!`
                 }else{
                     alert(`BINGO!!!\r\nCartela num.${i} venceu`)
                     opt.innerHTML = `rodada:${data.rodada.toString().padStart(2,'0')} - Vencedor cartela ${i.toString().padStart(2,'0')}`
                 }
-                data.clock.run = false
+                data.clock.pause = true
                 document.querySelector('#btnPlay').innerHTML = 'PLAY'
                 document.querySelector('#edtSorteio').innerHTML = ''
                 document.querySelector('#cmbVencedores').appendChild(opt)
@@ -173,7 +177,7 @@ async function openHTML(template=""){
                     marca.d2 += x==4-y ? 1 : 0
                     marca.cheia++
 
-                    if(cardNum == 0 && data.mark){
+                    if(cardNum == data.eu && data.mark){
                         const cell = document.querySelector('.cell'+x+'-'+y)
                         cell.classList.add('mark')                           
                     }
@@ -204,7 +208,7 @@ async function openHTML(template=""){
 
 /* RUN */
     setInterval(()=>{
-        if(data.clock.run){
+        if(!data.clock.pause){
             data.clock.count ++
             if(data.clock.count >= data.clock.speed){
                 sorteio()

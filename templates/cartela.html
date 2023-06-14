@@ -97,11 +97,11 @@ document.querySelector('#viewSpeed').innerHTML =  (data.clock.speed/2).toString(
         document.querySelector('.numbers').appendChild(line)
     }
 
-    showCartela(data.cartelas[0])
+    showCartela(data.cartelas[data.eu])
 
     document.querySelector('#btnPlay').addEventListener('click',()=>{
-        data.clock.run = !data.clock.run
-        document.querySelector('#btnPlay').innerHTML = data.clock.run ? 'PAUSE' : 'PLAY'
+        data.clock.pause = !data.clock.pause
+        document.querySelector('#btnPlay').innerHTML = data.clock.pause ? 'PLAY' : 'PAUSE'
     })
 
     document.querySelector('#edtSpeed').addEventListener('input',()=>{

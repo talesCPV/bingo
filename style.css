@@ -50,6 +50,10 @@ button:hover{
     text-align: center;
 }
 
+#cmbVencedores{
+    margin-bottom: 10px;
+}
+
 .line-center{
     display: flex;
     justify-content: center;

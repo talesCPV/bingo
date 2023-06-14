@@ -8,14 +8,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
-            padding: 30px;
         }
 
-        #btnLogin, input[type="text"], input[type="password"]{
-            width: 250px;
-            height: 30px;
-        }
 
     </style>
 
@@ -25,6 +19,9 @@
         <label for="edtNumCartela">Num Cartelas Totais</label>
         <input id="edtNumCartela" type="range" min="1" max="100" value="10">
         <h1 id="edtNum">10</h1>
+        <label for="edtMinCartela">Minha Cartela</label>
+        <input id="edtMinCartela" type="range" min="1" max="10" value="1">
+        <h1 id="edtMin">1</h1>
         <button id="btnJogar">Jogar</button>
 
     </div>
@@ -32,13 +29,28 @@
 </template>
 <script>
 
+    document.querySelector('#edtMinCartela').max = data.numCard
     document.querySelector('#edtNumCartela').value = data.numCard
-    document.querySelector('#edtNum').innerHTML = document.querySelector('#edtNumCartela').value
-    
+    document.querySelector('#edtMinCartela').value = data.eu+1
+    document.querySelector('#edtNum').innerHTML = data.numCard
+    document.querySelector('#edtMin').innerHTML = data.eu+1
+
     document.querySelector('#edtNumCartela').addEventListener('input',()=>{
         document.querySelector('#edtNum').innerHTML = document.querySelector('#edtNumCartela').value
         data.numCard = parseInt(document.querySelector('#edtNumCartela').value)
+        document.querySelector('#edtMinCartela').max = data.numCard
+        document.querySelector('#edtMin').innerHTML = document.querySelector('#edtMinCartela').value
+        data.eu = parseInt(document.querySelector('#edtMinCartela').value)-1
+
+
     })
+
+    document.querySelector('#edtMinCartela').addEventListener('input',()=>{
+        document.querySelector('#edtMin').innerHTML = document.querySelector('#edtMinCartela').value
+        data.eu = parseInt(document.querySelector('#edtMinCartela').value)-1
+    })
+
+
 
     document.querySelector('#btnJogar').addEventListener('click',()=>{
         const tot = parseInt(document.querySelector('#edtNumCartela').value)
